@@ -14,12 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from website.views import welcome, date, about
+
+# We no longer need this import if we are using best practices
+# from meetings.views import detail, rooms_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', welcome),   # first argument is the url and the second argument is the view function. The empty string makes it the default
+    path('', welcome, name="welcome"),   # first argument is the url and the second argument is the view function. The empty string makes it the default
     path('date', date),
-    path('about', about)
+    path('about', about),
+    path('meetings/', include('meetings.urls'))
+# The bottom  lines are replaced by the line above.  This puts the meeting urls inside the meetings "app"
+#    path('meetings/<int:id>', detail, name="detailTest"),  # "< >" means it expects an integer after the / and be passed to the view function "detail" as the argument named "id"
+#    path('rooms', rooms_list, name="roomTest")
 ]

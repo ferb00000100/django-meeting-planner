@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from datetime import datetime
 from django.http import HttpResponse
+from meetings.models import Meeting
 
 def welcome(request):
-    return HttpResponse("Welcome to the meeting Planner")
+    return render(request, "website/welcome.html",
+                  {"meetings": Meeting.objects.all()})
 
 def date(request):
     return HttpResponse("The date is " + str(datetime.now()))
